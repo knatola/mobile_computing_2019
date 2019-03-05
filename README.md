@@ -6,28 +6,29 @@ Mobile computing(521045S -5ects) project work.
 Personal Diary for tracking mood, everyday and physical activity.
 
 Requirements(not necessary a working implementation of everything):
--Interface for input in text form 
--Free text, or choice from a set of options
--Interface for photo input
--Data storage
--Reminder mechanism
--Personal history
--Log, data visualisation (MPAndroidChart library), etc.
--Integrates with third party elements, for example:
--Physical activity (Health apps)
--Social media feed
--Image identification (Vision API)
+* Interface for input in text form 
+* Free text, or choice from a set of options
+* Interface for photo input
+* Data storage
+* Reminder mechanism
+* Personal history
+* Log, data visualisation (MPAndroidChart library), etc.
+* Integrates with third party elements, for example:
+* Physical activity (Health apps)
+* Social media feed
+* Image identification (Vision API)
 
 ## Implementation
 
 Attempt is to write the whole project in [kotlin](https://kotlinlang.org/)
 For personal interests architecture will use new android architecture components.
 Plan is to follow [mvvm](https://developer.android.com/jetpack/docs/guide)
+
 With tech stack:
--[rxjava](https://github.com/ReactiveX/RxJava) (and rxjava android bindings)
--[Room](https://developer.android.com/topic/libraries/architecture/room)
--[livedata](https://developer.android.com/topic/libraries/architecture/livedata)
--[picasso](https://square.github.io/picasso/)
+* [rxjava](https://github.com/ReactiveX/RxJava) (and rxjava android bindings)
+* [Room](https://developer.android.com/topic/libraries/architecture/room)
+* [livedata](https://developer.android.com/topic/libraries/architecture/livedata)
+* [picasso](https://square.github.io/picasso/)
 
 ## Building project
 
