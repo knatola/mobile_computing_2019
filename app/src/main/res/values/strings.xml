@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">What is up</string>
+
+    <!-- Geeral -->
+    <string name="day_activity_error">Error fetching day activity!</string>
+
+    <string name="today">today</string>
+    <string name="week">week</string>
+    <string name="all">all</string>
+
+    <string name="today_mood">mood...</string>
+    <string name="day_activity_duration">duration</string>
+    <string name="day_activity_name">activity</string>
+
+    <string name="general_save">Save</string>
+    <string name="general_add">Add</string>
+
+    <string name="walking">Walking</string>
+    <string name="on_foot">On foot</string>
+    <string name="running">Running</string>
+    <string name="on_bicycle">Bicycling</string>
+    <string name="still">Still</string>
+    <string name="other">Other</string>
+
+    <string-array name="activites">
+        <item>Walking</item>
+        <item>Running</item>
+        <item>Gym</item>
+        <item>Swimming</item>
+        <item>Cycling</item>
+    </string-array>
+
+</resources>
