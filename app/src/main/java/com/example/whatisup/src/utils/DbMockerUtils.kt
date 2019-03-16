@@ -5,11 +5,22 @@ import com.example.whatisup.R
 import com.example.whatisup.src.data.TYPE_OTHER
 import com.example.whatisup.src.data.model.DayActivity
 import com.example.whatisup.src.data.model.PhysicalActivity
+import com.example.whatisup.src.data.model.Reminder
 import com.google.android.gms.location.DetectedActivity
 import java.util.*
 
 fun getURLForResource(resourceId: Int): String {
     return Uri.parse("android.resource://" + com.example.whatisup.R::class.java.getPackage()!!.name + "/" + resourceId).toString()
+}
+
+fun createMockReminders(): List<Reminder> {
+    val reminder1= Reminder(0, 0, "TestHeader1", "test_reminder1", "random")
+    val reminder2 = Reminder(1, 0, "TestHeader2", "test_reminder2", "random")
+    val reminder3 = Reminder(2, 0, "TestHeader3", "test_reminder3", "random")
+    val reminder4 = Reminder(3, 0, "TestHeader4", "test_reminder4", "random")
+    val reminder5 = Reminder(4, 0, "TestHeader5", "test_reminder5", "random")
+
+    return listOf(reminder1, reminder2, reminder3, reminder4, reminder5)
 }
 
 fun createMocks(): List<DayActivity> {

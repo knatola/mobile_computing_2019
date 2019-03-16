@@ -13,9 +13,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.whatisup.R
-import com.example.whatisup.src.data.ActivityProvider
 import com.example.whatisup.src.data.common.Status
 import com.example.whatisup.src.data.model.DayActivity
 import com.example.whatisup.src.ui.adapter.ActivityAdapter
@@ -25,6 +25,8 @@ import com.example.whatisup.src.ui.viewmodel.DayActivityViewModelFactory
 import com.example.whatisup.src.utils.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.day_view_fragment_layout.*
+import java.lang.IllegalStateException
+import kotlin.math.exp
 
 private const val TAG = "DayFragment"
 private const val REQUEST_IMAGE_PICK = 11
@@ -38,11 +40,19 @@ class DayFragment: Fragment() {
 
     private var date: Long = 0
 
+    // booleans to track the different expanded states, simple
+    private var imageExpanded = true
+    private var emojiExpanded = true
+    private var activityExpanded = true
+    private var moodExpanded = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModelFactory = Injection.provideDayActivityVmFactory(requireContext())
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(DayActivityViewModel::class.java)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this, viewModelFactory).get(DayActivityViewModel::class.java)
+        } ?: throw IllegalStateException("Invalid Activity!")
 
         arguments?.let {
             date = arguments!!.getLong("date")
@@ -55,13 +65,10 @@ class DayFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        activity_recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        emoticon_wrapper.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
+        emoji_recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         physActivityAdapter = ActivityAdapter(mutableListOf(), requireContext())
         emojiAdapter = EmojiAdapter(getEmojiList(), requireContext())
-//        activity_recycler.adapter = physActivityAdapter
-        emoticon_wrapper.adapter = emojiAdapter
+        emoji_recycler.adapter = emojiAdapter
 
         viewModel.currentDay.observe(this, Observer {
             it?.let { activity ->
@@ -94,7 +101,38 @@ class DayFragment: Fragment() {
             startActivityForResult(Intent.createChooser(imageIntent, "Select image"), REQUEST_IMAGE_PICK)
         }
 
+        image_edit_view.setOnClickListener {
+            imageExpanded = setExpanded(imageExpanded, image_expanded_view, image_expand)
+        }
+
+        emoji_edit_view.setOnClickListener {
+            emojiExpanded = setExpanded(emojiExpanded, emoji_expanded_view, emoji_expand)
+        }
+
+        activity_edit_view.setOnClickListener {
+            activityExpanded = setExpanded(activityExpanded, activity_expanded_view, activity_expand)
+        }
+
+        mood_edit_view.setOnClickListener {
+            moodExpanded = setExpanded(moodExpanded, mood_expanded_view, mood_expand)
+        }
+
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setExpanded(expanded: Boolean, view: View, imageV: ImageView): Boolean {
+        when (expanded) {
+            true -> {
+                view.visibility = View.GONE
+                imageV.setImageDrawable(requireContext().getDrawable(R.drawable.ic_expand_more_black_24dp))
+            }
+            false -> {
+                view.visibility = View.VISIBLE
+                imageV.setImageDrawable(requireContext().getDrawable(R.drawable.ic_expand_less_black_24dp))
+            }
+        }
+
+        return !expanded
     }
 
     override fun onStart() {

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.widget.TextView
 import com.example.whatisup.R
 import com.example.whatisup.src.data.ActivityProvider
@@ -16,14 +15,14 @@ private const val TAG = "MainActivity"
 const val DAY_FRAGMENT_TAG = "day"
 const val SECOND_DAY_FRAG_TAG = "second"
 const val WEEK_FRAGMENT_TAG = "week"
-const val ALL_FRAGMENT_TAG = "all"
+const val REMINDER_FRAGMENT_TAG = "reminder"
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var dayFragment: DayFragment
     private lateinit var weekFragment: WeekFragment
-    private lateinit var allFragment: AllFragment
+    private lateinit var reminderFragment: ReminderFragment
     private lateinit var activeFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +30,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         dayFragment = DayFragment()
         weekFragment = WeekFragment()
-        allFragment = AllFragment()
+        reminderFragment = ReminderFragment()
         activeFragment = dayFragment
         initFragment(weekFragment, WEEK_FRAGMENT_TAG)
-        initFragment(allFragment, ALL_FRAGMENT_TAG)
+        initFragment(reminderFragment, REMINDER_FRAGMENT_TAG)
         supportFragmentManager.beginTransaction().add(R.id.main_framelayout, dayFragment, DAY_FRAGMENT_TAG).commit()
 
         toolbar = findViewById(R.id.toolbar)
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(weekFragment, "Week") //todo hardcoded
                 }
                 R.id.action_all -> {
-                    loadFragment(allFragment, "All") //todo hardcoded
+                    loadFragment(reminderFragment, "Reminders") //todo hardcoded
                 }
             }
             return@setOnNavigationItemSelectedListener true

@@ -3,8 +3,7 @@ package com.example.whatisup.src.ui.viewmodel
 import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.example.whatisup.src.data.ActivityProvider
-import com.example.whatisup.src.data.DayActivityRepository
+import com.example.whatisup.src.data.repository.DayActivityRepository
 import com.example.whatisup.src.data.RxBus
 import com.example.whatisup.src.data.common.State
 import com.example.whatisup.src.data.common.Status

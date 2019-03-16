@@ -1,5 +1,6 @@
-package com.example.whatisup.src.data
+package com.example.whatisup.src.data.repository
 
+import com.example.whatisup.src.data.AppDatabase
 import com.example.whatisup.src.data.model.DayActivity
 import io.reactivex.Completable
 import io.reactivex.Single

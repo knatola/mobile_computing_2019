@@ -1,96 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/bottom_selector_margin"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<RelativeLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:descendantFocusability="beforeDescendants"
+        android:animateLayoutChanges="true"
         android:focusableInTouchMode="true">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/emoticon_wrapper"
-        android:layout_below="@+id/today_btn_image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:id="@+id/image_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/view_1"
-        android:background="@color/cyan"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/emoticon_wrapper"
-        android:layout_height="2dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_width="match_parent"
-        />
-    <!--
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_recycler"
-        android:layout_margin="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/view_1"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-        -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/image_edit_view"
+                android:paddingTop="@dimen/large_margin"
+                android:paddingBottom="@dimen/large_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <com.example.whatisup.src.ui.view.HorizontalGraphView
-        android:id="@+id/activity_graph"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/small_margin"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/view_1"/>
+                <ImageView
+                    android:src="@drawable/ic_camera_alt_black_24dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/today_mood_input"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:layout_marginStart="@dimen/medium_margin"
-        android:layout_marginEnd="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/bottom_selector_margin"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimaryTransparent"
-        android:minLines="8"
-        android:gravity="start"
-        android:maxLines="8"
-        android:hint="@string/today_mood"
-        android:layout_below="@id/view_2"
-        android:scrollbars="vertical"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+                <TextView
+                    android:text="@string/day_image_edit"
+                    android:layout_weight="3"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-    <View
-        android:id="@+id/view_2"
-        android:background="@color/cyan"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/activity_graph"
-        android:layout_height="2dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_width="match_parent"
-        />
+                <ImageView
+                    android:id="@+id/image_expand"
+                    android:src="@drawable/ic_expand_more_black_24dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-    <ImageButton
-        android:id="@+id/today_btn_image"
-        android:background="@color/colorPrimaryTransparent"
-        android:src="@drawable/ic_camera_alt_black_24dp"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+            </LinearLayout>
 
-</RelativeLayout>
+            <LinearLayout
+                android:id="@+id/image_expanded_view"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/today_btn_image"
+                    android:background="@color/colorPrimaryTransparent"
+                    android:src="@drawable/ic_camera_alt_black_24dp"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:textSize="@dimen/medium_text"
+                    android:text="@string/day_image_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/image_divider"
+                android:background="@color/cyan"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_width="match_parent" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/emoji_wrapper"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginBottom="@dimen/large_margin"
+            android:layout_below="@+id/image_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/emoji_edit_view"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/large_margin"
+                android:paddingBottom="@dimen/large_margin"
+                android:layout_marginBottom="@dimen/medium_margin"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_face"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/day_emoji_edit"
+                    android:layout_weight="3"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/emoji_expand"
+                    android:src="@drawable/ic_expand_more_black_24dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/emoji_expanded_view"
+                android:orientation="vertical"
+                android:layout_below="@+id/emoji_edit_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/emoji_recycler"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_below="@id/emoji_recycler"
+                    android:text="@string/day_emoji_description"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:layout_marginBottom="@dimen/large_margin"
+                    android:textSize="@dimen/medium_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/emoticon_divider"
+                android:background="@color/cyan"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_alignParentBottom="true"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_width="match_parent" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/activity_wrapper"
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackground"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:layout_below="@+id/emoji_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/activity_edit_view"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/large_margin"
+                android:paddingBottom="@dimen/large_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_margin="@dimen/medium_margin"
+                    android:src="@drawable/activity_gym"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/day_activity_edit"
+                    android:layout_weight="3"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/activity_expand"
+                    android:src="@drawable/ic_expand_more_black_24dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_expanded_view"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.example.whatisup.src.ui.view.HorizontalGraphView
+                    android:id="@+id/activity_graph"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin" />
+
+                <TextView
+                    android:layout_margin="@dimen/medium_margin"
+                    android:textSize="@dimen/medium_text"
+                    android:textColor="@color/black"
+                    android:text="@string/day_activity_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/activity_divider"
+                android:background="@color/cyan"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_width="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mood_wrapper"
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackground"
+            android:layout_below="@id/activity_wrapper"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/mood_edit_view"
+
+                android:paddingTop="@dimen/large_margin"
+                android:paddingBottom="@dimen/large_margin"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="@string/day_mood_edit"
+                    android:layout_weight="3"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/mood_expand"
+                    android:src="@drawable/ic_expand_more_black_24dp"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mood_expanded_view"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/today_mood_input"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:inputType="textMultiLine"
+                    android:lines="8"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimaryTransparent"
+                    android:minLines="8"
+                    android:gravity="start"
+                    android:maxLines="8"
+                    android:hint="@string/today_mood"
+                    android:scrollbars="vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
+
+                <TextView
+                    android:layout_margin="@dimen/medium_margin"
+                    android:text="@string/day_mood_description"
+                    android:textSize="@dimen/medium_text"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/mood_divider"
+                android:background="@color/cyan"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_width="match_parent" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </ScrollView>

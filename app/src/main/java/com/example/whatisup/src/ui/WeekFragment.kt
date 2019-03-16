@@ -90,7 +90,9 @@ class WeekFragment: Fragment() {
         Log.i(TAG, "onResume list!")
         list?.let {
             Log.i(TAG, "onResume list is : ${list.size}")
-            (requireActivity() as MainActivity).setTitle("${stringDate(list[0].date)} - ${stringDate(list[list.lastIndex].date)}")
+            if (list.isNotEmpty()) {
+                (requireActivity() as MainActivity).setTitle("${stringDate(list[0].date)} - ${stringDate(list[list.lastIndex].date)}")
+            }
         }
     }
 

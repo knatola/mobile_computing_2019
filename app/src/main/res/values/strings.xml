@@ -7,6 +7,7 @@
     <string name="today">today</string>
     <string name="week">week</string>
     <string name="all">all</string>
+    <string name="reminders">reminders</string>
 
     <string name="today_mood">mood...</string>
     <string name="day_activity_duration">duration</string>
@@ -14,6 +15,18 @@
 
     <string name="general_save">Save</string>
     <string name="general_add">Add</string>
+
+
+    <!-- Day -->
+    <string name="day_image_edit">Days image</string>
+    <string name="day_emoji_edit">Days emoji</string>
+    <string name="day_activity_edit">Days activity</string>
+    <string name="day_mood_edit">Days mood</string>
+    <string name="day_mood_description">You can write something about your day.</string>
+    <string name="day_image_desc">Choose an image describing your day</string>
+    <string name="day_activity_description">The graph describes your days activity, which is gathered by using your phones sensors.</string>
+    <string name="day_emoji_description">Choose an emoji that best describes your day.</string>
+
 
     <string name="walking">Walking</string>
     <string name="on_foot">On foot</string>
