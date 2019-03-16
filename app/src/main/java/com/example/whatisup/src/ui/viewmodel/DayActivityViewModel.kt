@@ -20,6 +20,7 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
     var count = 0
     var dayActivities = MutableLiveData<List<DayActivity>>()
     val currentDay = MutableLiveData<DayActivity>()
+    val selectedEmoji = MutableLiveData<Int>()
 
     init {
         setActivities()
@@ -39,6 +40,10 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
         return TimeUtils.getWeekAgo(count)
     }
 
+    fun setEmoji(emoji: Int) {
+        selectedEmoji.value = emoji
+    }
+
     fun setActivity(date: Long) {
         setState(State(Status.LOADING))
         val disposable = dayActivityRepository.getDayActivity(date)
@@ -47,6 +52,7 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
             .subscribe({
                 Log.d(TAG, "Current day = ${it.date}, ${it.imagePath}")
                 currentDay.value = it
+                selectedEmoji.value = it.emoji
                 setState(State(Status.SUCCESSFUL))
             }, { e ->
                 Log.w(TAG, e)

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,10 @@ import com.example.whatisup.src.ui.viewmodel.DayActivityViewModelFactory
 import com.example.whatisup.src.utils.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.day_view_fragment_layout.*
+import kotlinx.android.synthetic.main.emoji_info_layout.*
+import kotlinx.android.synthetic.main.graph_info_layout.*
+import kotlinx.android.synthetic.main.image_info_layout.*
+import kotlinx.android.synthetic.main.mood_info_layout.*
 import java.lang.IllegalStateException
 import kotlin.math.exp
 
@@ -68,6 +73,7 @@ class DayFragment: Fragment() {
         emoji_recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         physActivityAdapter = ActivityAdapter(mutableListOf(), requireContext())
         emojiAdapter = EmojiAdapter(getEmojiList(), requireContext())
+        emojiAdapter.setVm(viewModel)
         emoji_recycler.adapter = emojiAdapter
 
         viewModel.currentDay.observe(this, Observer {
@@ -75,12 +81,32 @@ class DayFragment: Fragment() {
                 Log.d(TAG, "Updating day UI: ${activity}")
                 emojiAdapter.setSelection(activity.emoji)
                 (requireActivity() as MainActivity).setTitle(stringDate(activity.date))
+
+                emoji_info_header.text = getEmojiText(activity.emoji, requireContext())
+                emoji_header2.text = getEmojiText(activity.emoji, requireContext())
+                if (activity.imageCaption == "") image_header2.text = "No caption"
+                else image_header2.text = activity.imageCaption
+
+                image_caption_input.text = Editable.Factory.getInstance().newEditable(activity.imageCaption)
+
                 physActivityAdapter.update(activity.activities)
                 today_mood_input.setText(activity.moodText)
+                mood_header2.text = activity.moodText.take(10) + "..." // hardcoded
+                activity_info_header.text = totalActivityText(10, requireContext())
+                activity_header2.text = totalActivityText(10, requireContext())
                 activity_graph.setData(activity.activities)
+
                 Log.i(TAG, "loading image: ${activity.imagePath}")
+
                 if (activity.imagePath != "")
                     Picasso.get().load(activity.imagePath).noPlaceholder().centerCrop().fit().into(today_btn_image)
+            }
+        })
+
+        viewModel.selectedEmoji.observe(this, Observer {
+            it?.let { emoji ->
+                emoji_info_header.text = getEmojiText(emoji, requireContext())
+                emoji_header2.text = getEmojiText(emoji, requireContext())
             }
         })
 
@@ -103,18 +129,36 @@ class DayFragment: Fragment() {
 
         image_edit_view.setOnClickListener {
             imageExpanded = setExpanded(imageExpanded, image_expanded_view, image_expand)
+
+            if (imageExpanded) {
+                image_header2.visibility = View.INVISIBLE
+            } else {
+                image_header2.visibility = View.VISIBLE
+                hideKeyboard(requireActivity(), it)
+            }
         }
 
         emoji_edit_view.setOnClickListener {
             emojiExpanded = setExpanded(emojiExpanded, emoji_expanded_view, emoji_expand)
+
+            if (emojiExpanded) emoji_header2.visibility = View.INVISIBLE else emoji_header2.visibility = View.VISIBLE
         }
 
         activity_edit_view.setOnClickListener {
             activityExpanded = setExpanded(activityExpanded, activity_expanded_view, activity_expand)
+
+            if (activityExpanded) activity_header2.visibility = View.INVISIBLE else activity_header2.visibility = View.VISIBLE
         }
 
         mood_edit_view.setOnClickListener {
             moodExpanded = setExpanded(moodExpanded, mood_expanded_view, mood_expand)
+
+            if (moodExpanded) {
+                mood_header2.visibility = View.INVISIBLE
+            } else {
+                mood_header2.visibility = View.VISIBLE
+                hideKeyboard(requireActivity(), it)
+            }
         }
 
         super.onViewCreated(view, savedInstanceState)
@@ -158,7 +202,8 @@ class DayFragment: Fragment() {
         val physActivies = physActivityAdapter.activityList
         val moodText = today_mood_input.text.toString()
         val imagePath = uri
-        val newActivity = DayActivity(date, physActivies, moodText, imagePath, emoji)
+        val caption = image_caption_input.text.toString()
+        val newActivity = DayActivity(date, physActivies, moodText, imagePath, emoji, caption)
 
         viewModel.saveActivity(newActivity)
     }

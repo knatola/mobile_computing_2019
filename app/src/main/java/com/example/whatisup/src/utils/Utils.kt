@@ -1,7 +1,10 @@
 package com.example.whatisup.src.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.example.whatisup.R
 import com.example.whatisup.src.data.TYPE_OTHER
 import com.example.whatisup.src.data.model.Emoji
@@ -17,6 +20,21 @@ private val emojiList = arrayListOf(
     Emoji(false, 3),
     Emoji(false, 4)
     )
+
+fun totalActivityText(activity: Long, context: Context): String {
+    return context.getString(R.string.activity_high )
+}
+
+fun getEmojiText(emoji: Int, context: Context): String {
+    return when (emoji) {
+        0 -> context.getString(R.string.emoji_very_sad)
+        1 -> context.getString(R.string.emoji_sad)
+        2 -> context.getString(R.string.emoji_neutral)
+        3 -> context.getString(R.string.emoji_happy)
+        4 -> context.getString(R.string.emoji_very_happy)
+        else -> context.getString(R.string.emoji_neutral)
+    }
+}
 
 fun getActivityText(type: Int, context: Context): String {
     return when (type) {
@@ -42,6 +60,11 @@ fun getActivityIcon(type: Int, context: Context): Drawable? {
         DetectedActivity.ON_BICYCLE -> context.getDrawable(R.drawable.activity_cycling)
         else -> context.getDrawable(R.drawable.activity_running)
     }
+}
+
+fun hideKeyboard(context: Context, view: View) {
+    val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
 fun getEmojiDrawable(type: Int, context: Context): Drawable? {

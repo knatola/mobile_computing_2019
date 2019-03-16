@@ -18,15 +18,26 @@
 
 
     <!-- Day -->
-    <string name="day_image_edit">Days image</string>
-    <string name="day_emoji_edit">Days emoji</string>
-    <string name="day_activity_edit">Days activity</string>
-    <string name="day_mood_edit">Days mood</string>
+    <string name="day_image_edit">Picture of the day</string>
+    <string name="day_emoji_edit">Emoji</string>
+    <string name="day_activity_edit">Activity</string>
+    <string name="day_mood_edit">Mood</string>
     <string name="day_mood_description">You can write something about your day.</string>
     <string name="day_image_desc">Choose an image describing your day</string>
     <string name="day_activity_description">The graph describes your days activity, which is gathered by using your phones sensors.</string>
     <string name="day_emoji_description">Choose an emoji that best describes your day.</string>
+    <string name="day_image_input">Caption</string>
 
+    <string name="emoji_very_sad">Very sad</string>
+    <string name="emoji_sad">Sad</string>
+    <string name="emoji_neutral">Neutral</string>
+    <string name="emoji_happy">Happy</string>
+    <string name="emoji_very_happy">Very Happy</string>
+
+    <string name="activity_inactive">Inactive</string>
+    <string name="activity_high">High</string>
+    <string name="activity_low">Low</string>
+    <string name="activity_medium">Medium</string>
 
     <string name="walking">Walking</string>
     <string name="on_foot">On foot</string>

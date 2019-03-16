@@ -11,12 +11,13 @@ data class DayActivity(
     val activities: MutableList<PhysicalActivity>,
     @ColumnInfo(name = "mood_text") val moodText: String,
     @ColumnInfo(name = "image_path") val imagePath: String,
-    @ColumnInfo(name = "emoji_type") val emoji: Int
+    @ColumnInfo(name = "emoji_type") val emoji: Int,
+    var imageCaption: String = ""
 ) {
     @Ignore
     constructor() : this(0L, mutableListOf<PhysicalActivity>(), "", "", 2)
 
     override fun toString(): String {
-        return "date: $date, activities:$activities, moodText: $moodText, imagePath: $imagePath, emoji: $emoji"
+        return "date: $date, activities:$activities, moodText: $moodText, imagePath: $imagePath, emoji: $emoji, caption: $imageCaption"
     }
 }

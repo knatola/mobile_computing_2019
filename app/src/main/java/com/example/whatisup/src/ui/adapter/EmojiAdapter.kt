@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import com.example.whatisup.R
 import com.example.whatisup.src.data.model.Emoji
+import com.example.whatisup.src.ui.viewmodel.DayActivityViewModel
 import com.example.whatisup.src.utils.getEmojiDrawable
 
 class EmojiAdapter(private val emojiList: List<Emoji>, private val context: Context) : RecyclerView.Adapter<EmojiViewHolder>() {
 
     private val holderList: MutableList<EmojiViewHolder> = mutableListOf()
     var selected: Int = 2 // default selected is neutral
+
+    private var vm: DayActivityViewModel? = null
 
     override fun getItemCount(): Int {
         return emojiList.size
@@ -30,6 +33,7 @@ class EmojiAdapter(private val emojiList: List<Emoji>, private val context: Cont
             hideAllSelectors()
             holder.selectedIndicator.visibility = View.VISIBLE
             selected = holder.adapterPosition
+            vm?.setEmoji(selected)
         }
     }
 
@@ -44,6 +48,10 @@ class EmojiAdapter(private val emojiList: List<Emoji>, private val context: Cont
         for (holder in holderList) {
             holder.selectedIndicator.visibility = View.INVISIBLE
         }
+    }
+
+    fun setVm(vm: DayActivityViewModel) {
+        this.vm = vm
     }
 
     fun setSelection(type: Int) {
