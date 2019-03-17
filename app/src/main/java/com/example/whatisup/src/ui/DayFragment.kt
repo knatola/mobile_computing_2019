@@ -76,6 +76,8 @@ class DayFragment: Fragment() {
         emojiAdapter.setVm(viewModel)
         emoji_recycler.adapter = emojiAdapter
 
+        activity_graph.setDefaultTargetPoints() // default targets
+
         viewModel.currentDay.observe(this, Observer {
             it?.let { activity ->
                 Log.d(TAG, "Updating day UI: ${activity}")

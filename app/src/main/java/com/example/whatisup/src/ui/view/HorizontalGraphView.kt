@@ -11,6 +11,9 @@ import com.example.whatisup.src.utils.getActivityText
 import com.google.android.gms.location.DetectedActivity
 import java.util.concurrent.TimeUnit
 import android.graphics.*
+import android.support.v4.view.MotionEventCompat
+import android.view.MotionEvent
+import android.view.MotionEvent.INVALID_POINTER_ID
 
 private const val TAG = "HorizontalGraphView"
 
@@ -18,6 +21,7 @@ private const val TAG = "HorizontalGraphView"
 // graph with bar/line graph and horizontal/vertical modes
 class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, attrs){
 
+    private var activePointerId = INVALID_POINTER_ID
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val backgroundColor = context.getColor(R.color.colorPrimary)
     private val dotColor = Color.WHITE
@@ -41,12 +45,16 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
     private var xDescriptionSize = heightSize / 10f
     private var yDescriptionSize = widthSize / 10f + textSize
 
-    private var lineWidht = 10.0f
+    private var lineWidth = 10.0f
     private var xMargin = yInterval / 2
 
     private var yMargin = xInterval / 2
 
     private var data = mutableListOf<DataPoint>()
+    private var targetPoints = HashMap<String, DataPoint>()
+
+    private var lastX = 0.0F
+    private var lastY = 0.0F
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -57,6 +65,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
 //        drawDots(canvas)
         drawDescriptions(canvas)
         drawDescriptionAreas(canvas)
+        drawTargetPointers(canvas)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -97,6 +106,86 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
 
     }
 
+    fun setDefaultTargetPoints() {
+        val startX = xMargin + yDescriptionSize
+        val baseX = startX + xInterval
+        val startY = xDescriptionSize + yInterval / 8
+        val baseY = startY
+        targetPoints["still"] = DataPoint(baseX, baseY, 0)
+        targetPoints["walking"] = DataPoint(baseX, baseY + yInterval, 0)
+        targetPoints["onFoot"] = DataPoint(baseX, baseY + yInterval * 2, 0)
+        targetPoints["bicycling"] = DataPoint(baseX, baseY + yInterval * 3, 0)
+        targetPoints["running"] = DataPoint(baseX, baseY + yInterval * 4, 0)
+        targetPoints["other"] = DataPoint(baseX, baseY + yInterval * 5, 0)
+    }
+
+
+    override fun performClick(): Boolean {
+//        Log.d(TAG, "perform click")
+        return super.performClick()
+    }
+
+    // todo: still contains ctrl c+v code
+    override fun onTouchEvent(ev: MotionEvent?): Boolean {
+        performClick()
+
+        val action = MotionEventCompat.getActionMasked(ev)
+
+        when (action) {
+            MotionEvent.ACTION_DOWN -> {
+
+                MotionEventCompat.getActionIndex(ev).also { pointerIndex ->
+                    lastX = MotionEventCompat.getX(ev, pointerIndex)
+                    lastY = MotionEventCompat.getY(ev, pointerIndex)
+
+                }
+
+                // Save the ID of this pointer (for dragging)
+                activePointerId = MotionEventCompat.getPointerId(ev, 0)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                // Find the index of the active pointer and fetch its position
+                val (x: Float, y: Float) =
+                    MotionEventCompat.findPointerIndex(ev, activePointerId).let { pointerIndex ->
+                        // Calculate the distance moved
+                        MotionEventCompat.getX(ev, pointerIndex) to
+                                MotionEventCompat.getY(ev, pointerIndex)
+                    }
+
+                changeTarget(x , y ) // this changes the target sliders location
+                invalidate()
+                lastX = x
+                lastY = y
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                activePointerId = INVALID_POINTER_ID
+            }
+            MotionEvent.ACTION_POINTER_UP -> {
+
+                MotionEventCompat.getActionIndex(ev).also { pointerIndex ->
+                    MotionEventCompat.getPointerId(ev, pointerIndex)
+                        .takeIf { it == activePointerId }
+                        ?.run {
+                            // This was our active pointer going up. Choose a new
+                            // active pointer and adjust accordingly.
+                            val newPointerIndex = if (pointerIndex == 0) 1 else 0
+                            lastX = MotionEventCompat.getX(ev, newPointerIndex)
+                            lastY = MotionEventCompat.getY(ev, newPointerIndex)
+                            activePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex)
+                        }
+                }
+            }
+        }
+
+        return true
+    }
+
+    private fun changeTarget(x: Float, y: Float) {
+        val value = targetPoints.filter { it.value.y < y && y < it.value.y + yInterval }
+        value.forEach { it.value.x = x }
+    }
+
     fun setData(data: List<PhysicalActivity>) {
         this.data.clear()
         var count = 1
@@ -111,6 +200,20 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
         var x = "$hours.$minutes".toFloat()
         if (x > 6.0) x = 6.0f
         return DataPoint(x, y, activity.type)
+    }
+
+    private fun drawTargetPointers(canvas: Canvas) {
+        paint.strokeWidth = lineWidth
+        paint.color = lineColor
+
+        targetPoints.forEach {
+            val x = it.value.x
+            val y = it.value.y //+ yInterval / 8
+            val x1 = x
+            val y1 = it.value.y + yInterval - yInterval / 8
+
+            canvas.drawLine(x, y, x1, y1, paint)
+        }
     }
 
     private fun drawDescriptionAreas(canvas: Canvas) {
@@ -257,7 +360,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeJoin = Paint.Join.ROUND
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = lineWidht
+        paint.strokeWidth = lineWidth
         canvas.drawPath(path, paint)
     }
 
@@ -273,7 +376,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
         }
     }
 
-    private data class DataPoint(val x: Float, val y: Float, val type: Int) {
+    private data class DataPoint(var x: Float, var y: Float, val type: Int) {
         override fun toString(): String {
             return "$x:$y"
         }

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/bottom_selector_margin"
+    android:animateLayoutChanges="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
@@ -16,6 +17,7 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:animateLayoutChanges="true"
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
             android:id="@+id/image_wrapper"
@@ -89,6 +91,7 @@
 
         <RelativeLayout
             android:id="@+id/emoji_wrapper"
+            android:animateLayoutChanges="true"
             android:background="?attr/selectableItemBackground"
             android:layout_marginBottom="@dimen/large_margin"
             android:layout_below="@+id/image_wrapper"
@@ -170,6 +173,7 @@
             android:id="@+id/activity_wrapper"
             android:orientation="vertical"
             android:background="?attr/selectableItemBackground"
+            android:animateLayoutChanges="true"
             android:layout_marginBottom="@dimen/large_margin"
             android:layout_below="@+id/emoji_wrapper"
             android:layout_width="match_parent"
@@ -250,6 +254,7 @@
             android:background="?attr/selectableItemBackground"
             android:layout_below="@id/activity_wrapper"
             android:layout_marginBottom="@dimen/medium_margin"
+            android:animateLayoutChanges="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 

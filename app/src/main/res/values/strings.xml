@@ -24,9 +24,11 @@
     <string name="day_mood_edit">Mood</string>
     <string name="day_mood_description">You can write something about your day.</string>
     <string name="day_image_desc">Choose an image describing your day</string>
-    <string name="day_activity_description">The graph describes your days activity, which is gathered by using your phones sensors.</string>
+    <string name="day_activity_description">The graph describes your days activity, which is gathered by using your phones sensors. You can use the slider
+    to set a target for yourself.</string>
     <string name="day_emoji_description">Choose an emoji that best describes your day.</string>
     <string name="day_image_input">Caption</string>
+    <string name="day_select_targets">Targets</string>
 
     <string name="emoji_very_sad">Very sad</string>
     <string name="emoji_sad">Sad</string>
