@@ -26,7 +26,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
     private val backgroundColor = context.getColor(R.color.colorPrimary)
     private val dotColor = Color.WHITE
     private val borderColor = Color.WHITE
-    private val lineColor = Color.CYAN
+    private val lineColor = context.getColor(R.color.colorAccent)
 
     private val goodColor = Color.GREEN
     private val badColor = Color.RED
@@ -35,7 +35,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
     private val borderWidth = 6.0f
 
     private var widthSize = 1000
-    private var heightSize = 800
+    private var heightSize = 1000
     private var left = 0f
     private var top = 0f
 
@@ -53,6 +53,8 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
     private var data = mutableListOf<DataPoint>()
     private var targetPoints = HashMap<String, DataPoint>()
 
+    private var showTargets: Boolean = true
+
     private var lastX = 0.0F
     private var lastY = 0.0F
 
@@ -65,11 +67,12 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
 //        drawDots(canvas)
         drawDescriptions(canvas)
         drawDescriptionAreas(canvas)
-        drawTargetPointers(canvas)
+
+        if (showTargets) drawTargetPointers(canvas)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredSize = 800
+        val desiredSize = 1000
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val widthMeasure = MeasureSpec.getSize(widthMeasureSpec)
@@ -104,6 +107,11 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
         paint.strokeWidth = borderWidth
         canvas.drawRect(rect, paint)
 
+    }
+
+    fun showTargets(show: Boolean) {
+        this.showTargets = show
+        invalidate()
     }
 
     fun setDefaultTargetPoints() {
@@ -204,7 +212,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
 
     private fun drawTargetPointers(canvas: Canvas) {
         paint.strokeWidth = lineWidth
-        paint.color = lineColor
+        paint.color = dotColor
 
         targetPoints.forEach {
             val x = it.value.x

@@ -20,6 +20,8 @@
             android:animateLayoutChanges="true"
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
+            android:outlineProvider="bounds"
+            android:elevation="2dp"
             android:id="@+id/image_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -66,6 +68,7 @@
                 <ImageView
                     android:id="@+id/image_expand"
                     android:src="@drawable/ic_expand_more_black_24dp"
+                    android:tint="@color/colorPrimary"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/medium_margin"
@@ -79,14 +82,6 @@
                 android:id="@+id/image_expanded_view"
                 layout="@layout/image_info_layout" />
 
-            <View
-                android:id="@+id/image_divider"
-                android:background="@color/cyan"
-                android:layout_height="2dp"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:layout_width="match_parent" />
-
         </LinearLayout>
 
         <RelativeLayout
@@ -95,6 +90,8 @@
             android:background="?attr/selectableItemBackground"
             android:layout_marginBottom="@dimen/large_margin"
             android:layout_below="@+id/image_wrapper"
+            android:outlineProvider="bounds"
+            android:elevation="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -140,6 +137,7 @@
                 <ImageView
                     android:id="@+id/emoji_expand"
                     android:src="@drawable/ic_expand_more_black_24dp"
+                    android:tint="@color/colorPrimary"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/medium_margin"
@@ -157,22 +155,14 @@
                 android:layout_marginBottom="@dimen/large_margin"
                 layout="@layout/emoji_info_layout" />
 
-            <View
-                android:id="@+id/emoticon_divider"
-                android:background="@color/cyan"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:layout_alignParentBottom="true"
-                android:layout_height="2dp"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:layout_width="match_parent" />
-
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/activity_wrapper"
             android:orientation="vertical"
             android:background="?attr/selectableItemBackground"
+            android:outlineProvider="bounds"
+            android:elevation="2dp"
             android:animateLayoutChanges="true"
             android:layout_marginBottom="@dimen/large_margin"
             android:layout_below="@+id/emoji_wrapper"
@@ -222,6 +212,7 @@
                 <ImageView
                     android:id="@+id/activity_expand"
                     android:src="@drawable/ic_expand_more_black_24dp"
+                    android:tint="@color/colorPrimary"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/medium_margin"
@@ -238,19 +229,13 @@
                 android:layout_marginBottom="@dimen/large_margin"
                 layout="@layout/graph_info_layout" />
 
-            <View
-                android:id="@+id/activity_divider"
-                android:background="@color/cyan"
-                android:layout_height="2dp"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:layout_width="match_parent" />
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/mood_wrapper"
             android:orientation="vertical"
+            android:outlineProvider="bounds"
+            android:elevation="2dp"
             android:background="?attr/selectableItemBackground"
             android:layout_below="@id/activity_wrapper"
             android:layout_marginBottom="@dimen/medium_margin"
@@ -300,6 +285,7 @@
                     android:layout_alignParentEnd="true"
                     android:id="@+id/mood_expand"
                     android:src="@drawable/ic_expand_more_black_24dp"
+                    android:tint="@color/colorPrimary"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/medium_margin"
                     android:layout_marginEnd="@dimen/medium_margin"
@@ -312,14 +298,6 @@
                 android:id="@+id/mood_expanded_view"
                 layout="@layout/mood_info_layout"
                 />
-
-            <View
-                android:id="@+id/mood_divider"
-                android:background="@color/cyan"
-                android:layout_height="2dp"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginEnd="@dimen/small_margin"
-                android:layout_width="match_parent" />
 
         </LinearLayout>
 

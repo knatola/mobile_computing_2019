@@ -2,19 +2,19 @@ package com.example.whatisup.src.data.dao
 
 import android.arch.persistence.room.*
 import com.example.whatisup.src.data.model.DayActivity
-import io.reactivex.Single
+import io.reactivex.Maybe
 
 @Dao
 interface DayActivityDao {
 
     @Query("SELECT * FROM dayactivity")
-    fun getAll(): Single<List<DayActivity>>
+    fun getAll(): Maybe<List<DayActivity>>
 
     @Query("SELECT * FROM dayactivity WHERE date = :date")
-    fun getDayActivity(date: Long): Single<DayActivity>
+    fun getDayActivity(date: Long): Maybe<DayActivity>
 
     @Query("SELECT * FROM dayactivity WHERE date > :date1 AND date <= :date2")
-    fun getDayActivitivities(date1: Long, date2: Long): Single<List<DayActivity>>
+    fun getDayActivitivities(date1: Long, date2: Long): Maybe<List<DayActivity>>
 
     @Insert
     fun insertAll(vararg dayActivities: DayActivity)

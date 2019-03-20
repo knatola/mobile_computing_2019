@@ -18,7 +18,7 @@ private const val TAG = "GraphView"
 class GraphView(context: Context, attrs: AttributeSet): View(context, attrs) {
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val lineColor = Color.CYAN
+    private val lineColor = context.getColor(R.color.colorAccent)
     private val backgroundColor = context.getColor(R.color.colorPrimary)
     private val dotColor = Color.WHITE
     private val borderColor = Color.WHITE
