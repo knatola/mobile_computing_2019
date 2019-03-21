@@ -62,6 +62,7 @@ class WeekFragment: Fragment() {
             data?.let { list ->
                 dayAdapter.update(list)
                 graph_view!!.setDataSet(list)
+
                 if (list.isNotEmpty()) {
                     week_header.text = "${stringDate(list[0].date)} - ${stringDate(list[list.lastIndex].date)}" //todo hardcoded
                 }

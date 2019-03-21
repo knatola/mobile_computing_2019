@@ -8,6 +8,19 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <View
+        android:id="@+id/nav_selector"
+        android:visibility="visible"
+        android:layout_width="14dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/today_action"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/today_action"
+        app:layout_constraintEnd_toEndOf="@id/today_action" />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/today_action"
         android:layout_marginStart="@dimen/large_margin"
@@ -37,7 +50,7 @@
 
         <TextView
             android:id="@+id/today_text"
-            android:text="today"
+            android:text="@string/today"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/select_today"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,20 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <View
-            android:id="@+id/today_selector"
-            android:visibility="visible"
-            android:layout_width="20dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="2dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/today_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
     </android.support.constraint.ConstraintLayout>
-
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/week_action"
@@ -87,10 +87,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
         <TextView
             android:id="@+id/week_text"
-            android:text="week"
+            android:text="@string/week"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/week_icon"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,18 +97,6 @@
             android:textColor="@color/colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-        <View
-            android:id="@+id/week_selector"
-            android:layout_marginBottom="2dp"
-            android:layout_width="20dp"
-            android:layout_height="2dp"
-            android:visibility="gone"
-            android:background="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/week_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -141,7 +128,7 @@
 
         <TextView
             android:id="@+id/reminder_text"
-            android:text="reminders"
+            android:text="@string/reminders"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reminder_icon"
             app:layout_constraintEnd_toEndOf="parent"
@@ -149,18 +136,6 @@
             android:textColor="@color/colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-        <View
-            android:id="@+id/reminder_selector"
-            android:layout_width="20dp"
-            android:layout_height="2dp"
-            android:layout_marginBottom="2dp"
-            android:visibility="gone"
-            android:background="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reminder_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
