@@ -29,6 +29,9 @@
     <string name="day_emoji_description">Choose an emoji that best describes your day.</string>
     <string name="day_image_input">Caption</string>
     <string name="day_select_targets">Targets</string>
+    <string name="day_edit_targets">Edit targets</string>
+    <string name="day_edit_targets_lock">Lock targets</string>
+    <string name="day_activity_amount">Current activity:</string>
 
     <string name="emoji_very_sad">Very sad</string>
     <string name="emoji_sad">Sad</string>

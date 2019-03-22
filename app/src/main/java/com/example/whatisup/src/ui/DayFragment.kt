@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.emoji_info_layout.*
 import kotlinx.android.synthetic.main.graph_info_layout.*
 import kotlinx.android.synthetic.main.image_info_layout.*
 import kotlinx.android.synthetic.main.mood_info_layout.*
+import kotlinx.android.synthetic.main.week_fragment_layout.*
 import java.lang.IllegalStateException
 import kotlin.math.exp
 
@@ -94,7 +95,7 @@ class DayFragment: Fragment() {
                 physActivityAdapter.update(activity.activities)
                 today_mood_input.setText(activity.moodText)
                 mood_header2.text = activity.moodText.take(10) + "..." // hardcoded
-                activity_info_header.text = totalActivityText(10, requireContext())
+                activity_amount.text = totalActivityText(10, requireContext())
                 activity_header2.text = totalActivityText(10, requireContext())
                 activity_graph.setData(activity.activities)
 
@@ -137,6 +138,18 @@ class DayFragment: Fragment() {
             } else {
                 image_header2.visibility = View.VISIBLE
                 hideKeyboard(requireActivity(), it)
+            }
+        }
+
+        edit_targets.setOnClickListener {
+            activity_graph.allowTargetMovement = !activity_graph.allowTargetMovement
+
+            if (activity_graph.allowTargetMovement) {
+                edit_targets.text = requireContext().getString(R.string.day_edit_targets_lock)
+                edit_targets.setTextColor(requireContext().getColor(R.color.red))
+            } else {
+                edit_targets.text = requireContext().getString(R.string.day_edit_targets)
+                edit_targets.setTextColor(requireContext().getColor(R.color.black))
             }
         }
 
