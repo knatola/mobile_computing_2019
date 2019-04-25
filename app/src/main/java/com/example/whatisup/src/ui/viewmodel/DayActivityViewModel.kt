@@ -5,8 +5,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.whatisup.src.data.repository.DayActivityRepository
 import com.example.whatisup.src.data.RxBus
-import com.example.whatisup.src.data.common.State
-import com.example.whatisup.src.data.common.Status
 import com.example.whatisup.src.data.model.DayActivity
 import com.example.whatisup.src.utils.TimeUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,25 +12,31 @@ import io.reactivex.schedulers.Schedulers
 
 private const val TAG = "DayActivityViewModel"
 
-class DayActivityViewModel(private val dayActivityRepository: DayActivityRepository) : BaseViewModel() {
+data class DayViewState(val activities: List<DayActivity> = listOf(),
+                        val currentDay: DayActivity = DayActivity(),
+                        val selectedEmoji: Int = 2)
+
+class DayActivityViewModel(private val dayActivityRepository: DayActivityRepository) : BaseViewModel<DayViewState>() {
 
     private var current = 1
     var count = 0
-    var dayActivities = MutableLiveData<List<DayActivity>>()
-    val currentDay = MutableLiveData<DayActivity>()
-    val selectedEmoji = MutableLiveData<Int>()
+
+    override val liveState = MutableLiveData<DayViewState>()
 
     init {
+        setState(DayViewState()) // init with "empty state"
         setActivities()
         setActivity(TimeUtils.getTodayLong())
-        val disposable = RxBus.listen(DayActivity::class.java)
+        addDisposable(RxBus.listen(DayActivity::class.java)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
-                currentDay.value = it
+                Log.d(TAG, "New value from ActivityService!")
+                setState(this.getState().copy(currentDay = it))
             }, { e ->
                 Log.w(TAG, "error!", e)
             })
+        )
     }
 
     private fun getDates(): List<Long> {
@@ -41,22 +45,19 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
     }
 
     fun setEmoji(emoji: Int) {
-        selectedEmoji.value = emoji
+        setState(this.getState().copy(selectedEmoji = emoji))
     }
 
     fun setActivity(date: Long) {
-        setState(State(Status.LOADING))
         val disposable = dayActivityRepository.getDayActivity(date)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d(TAG, "Current day = ${it.date}, ${it.imagePath}")
-                currentDay.value = it
-                selectedEmoji.value = it.emoji
-                setState(State(Status.SUCCESSFUL))
+                val state = this.getState().copy(currentDay = it, selectedEmoji = it.emoji)
+                setState(state)
             }, { e ->
-                Log.w(TAG, e)
-                setState(State(Status.ERROR, e))
+                Log.w(TAG, "Problem setting activity", e)
             })
         addDisposable(disposable)
     }
@@ -65,7 +66,8 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
     fun saveActivity(act: DayActivity) {
         dayActivityRepository.insertDayActivity(act).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ Log.i(TAG, "Saved DayActivity successfully")}, { e -> Log.w(TAG, "failed to save DayActivity")})
+            .doOnComplete { setState(getState().copy(currentDay = act)) }
+            .subscribe({ Log.i(TAG, "Saved DayActivity successfully")}, { e -> Log.w(TAG, "failed to save DayActivity", e)})
     }
 
     fun setActivities(forward: Boolean){
@@ -84,17 +86,13 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
         setActivities(dates[0], dates[1])
     }
 
-    fun getData() = dayActivities
-
     private fun setActivities(date1: Long = getDates()[0], date2: Long = TimeUtils.getTodayLong()) {
-        setState(State(Status.LOADING))
         val disposable = dayActivityRepository.getDayActivities(date1, date2)
-            .subscribe({ it ->
-                dayActivities.value = it
-                setState(State(Status.SUCCESSFUL))
+            .subscribe({
+                val state = this.getState().copy(activities = it)
+                setState(state)
             }, { e ->
                 Log.w(TAG, "Error getting activities!", e)
-                setState(State(Status.ERROR, e))
             })
         addDisposable(disposable)
     }

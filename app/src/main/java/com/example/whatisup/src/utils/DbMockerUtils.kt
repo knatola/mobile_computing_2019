@@ -7,6 +7,7 @@ import com.example.whatisup.src.data.model.DayActivity
 import com.example.whatisup.src.data.model.PhysicalActivity
 import com.example.whatisup.src.data.model.Reminder
 import com.google.android.gms.location.DetectedActivity
+import java.sql.Time
 import java.util.*
 
 fun getURLForResource(resourceId: Int): String {
@@ -14,13 +15,16 @@ fun getURLForResource(resourceId: Int): String {
 }
 
 fun createMockReminders(): List<Reminder> {
-    val reminder1= Reminder(0, 0, "TestHeader1", "test_reminder1", "random")
-    val reminder2 = Reminder(1, 0, "TestHeader2", "test_reminder2", "random")
-    val reminder3 = Reminder(2, 0, "TestHeader3", "test_reminder3", "random")
-    val reminder4 = Reminder(3, 0, "TestHeader4", "test_reminder4", "random")
-    val reminder5 = Reminder(4, 0, "TestHeader5", "test_reminder5", "random")
+    val reminder1= Reminder(0, TimeUtils.getTodayLong(), "TestHeader1", "test_reminder1", "still")
+    val reminder2 = Reminder(1, TimeUtils.getTodayLong(), "TestHeader2", "test_reminder2", "goal_walking")
+    val reminder3 = Reminder(2, TimeUtils.getTodayLong(), "TestHeader3", "test_reminder3", "still")
+    val reminder4 = Reminder(3, TimeUtils.getTodayLong(), "TestHeader4", "test_reminder4", "goal_walking")
+    val reminder5 = Reminder(4, TimeUtils.getTodayLong(), "TestHeader5", "test_reminder5", "still")
+    val reminder6 = Reminder(5, TimeUtils.getTodayLong(), "TestHeader6", "test_reminder6", "still")
+    val reminder7 = Reminder(6, TimeUtils.getTodayLong(), "TestHeader7", "test_reminder7", "still")
+    val reminder8 = Reminder(7, TimeUtils.getTodayLong(), "TestHeader8", "test_reminder8", "goal_walking")
 
-    return listOf(reminder1, reminder2, reminder3, reminder4, reminder5)
+    return listOf(reminder1, reminder2, reminder3, reminder4, reminder5, reminder6, reminder7, reminder8)
 }
 
 fun createMocks(): List<DayActivity> {

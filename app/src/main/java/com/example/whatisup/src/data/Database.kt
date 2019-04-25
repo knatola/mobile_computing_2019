@@ -35,6 +35,7 @@ abstract class AppDatabase: RoomDatabase() {
                 }
             }
 
+
             if (BuildConfig.DEBUG) {
                 val mockList = createMocks()
                 mockList.forEach {

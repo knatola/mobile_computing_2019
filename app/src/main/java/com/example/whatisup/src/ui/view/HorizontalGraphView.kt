@@ -14,6 +14,7 @@ import android.graphics.*
 import android.support.v4.view.MotionEventCompat
 import android.view.MotionEvent
 import android.view.MotionEvent.INVALID_POINTER_ID
+import com.example.whatisup.src.utils.checkType
 
 private const val TAG = "HorizontalGraphView"
 
@@ -65,6 +66,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
 
     private var lastX = 0.0F
     private var lastY = 0.0F
+//    private val yDescriptions = listOf("Still", )
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -279,8 +281,10 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
         var y = yMargin + xDescriptionSize + textSize / 2
         var x = yDescriptionSize - xMargin / 2
         for (i in this.data) {
-            drawDescription(canvas, x, y, getActivityText(i.type, context))
-            y += yInterval
+            if (checkType(i.type)) {
+                drawDescription(canvas, x, y, getActivityText(i.type, context))
+                y += yInterval
+            }
         }
 
         // X Descriptions
@@ -333,6 +337,7 @@ class HorizontalGraphView(context: Context, attrs: AttributeSet): View(context, 
         val startY = xDescriptionSize + betweenBars
 
         data.forEach {
+            if (!checkType(it.type)) return@forEach
             val x = startX
             val x1 = it.x * xInterval + startX
             val y = it.y * yInterval + startY

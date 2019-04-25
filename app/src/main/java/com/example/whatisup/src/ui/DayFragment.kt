@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -17,9 +16,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.whatisup.R
-import com.example.whatisup.src.data.common.Status
 import com.example.whatisup.src.data.model.DayActivity
-import com.example.whatisup.src.ui.adapter.ActivityAdapter
 import com.example.whatisup.src.ui.adapter.EmojiAdapter
 import com.example.whatisup.src.ui.viewmodel.DayActivityViewModel
 import com.example.whatisup.src.ui.viewmodel.DayActivityViewModelFactory
@@ -30,7 +27,6 @@ import kotlinx.android.synthetic.main.emoji_info_layout.*
 import kotlinx.android.synthetic.main.graph_info_layout.*
 import kotlinx.android.synthetic.main.image_info_layout.*
 import kotlinx.android.synthetic.main.mood_info_layout.*
-import kotlinx.android.synthetic.main.week_fragment_layout.*
 import java.lang.IllegalStateException
 import kotlin.math.exp
 
@@ -42,7 +38,6 @@ class DayFragment: Fragment() {
     private lateinit var viewModel: DayActivityViewModel
     private lateinit var viewModelFactory: DayActivityViewModelFactory
     private lateinit var emojiAdapter: EmojiAdapter
-    private lateinit var physActivityAdapter: ActivityAdapter
 
     private var date: Long = 0
 
@@ -72,54 +67,30 @@ class DayFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         emoji_recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        physActivityAdapter = ActivityAdapter(mutableListOf(), requireContext())
         emojiAdapter = EmojiAdapter(getEmojiList(), requireContext())
         emojiAdapter.setVm(viewModel)
         emoji_recycler.adapter = emojiAdapter
 
         activity_graph.setDefaultTargetPoints() // default targets
 
-        viewModel.currentDay.observe(this, Observer {
-            it?.let { activity ->
-                Log.d(TAG, "Updating day UI: ${activity}")
-                emojiAdapter.setSelection(activity.emoji)
-                (requireActivity() as MainActivity).setTitle(stringDate(activity.date))
+        viewModel.state().observe(this, Observer {
+            it?.let { state ->
+                emoji_info_header.text = getEmojiText(state.selectedEmoji, requireContext())
+                emoji_header2.text = getEmojiText(state.selectedEmoji, requireContext())
+                (requireActivity() as MainActivity).setTitle(stringDate(state.currentDay.date))
 
-                emoji_info_header.text = getEmojiText(activity.emoji, requireContext())
-                emoji_header2.text = getEmojiText(activity.emoji, requireContext())
-                if (activity.imageCaption == "") image_header2.text = "No caption"
-                else image_header2.text = activity.imageCaption
+                if (state.currentDay.imageCaption == "") image_header2.text = getString(R.string.no_caption)
+                else image_header2.text = state.currentDay.imageCaption
 
-                image_caption_input.text = Editable.Factory.getInstance().newEditable(activity.imageCaption)
-
-                physActivityAdapter.update(activity.activities)
-                today_mood_input.setText(activity.moodText)
-                mood_header2.text = activity.moodText.take(10) + "..." // hardcoded
-                activity_amount.text = totalActivityText(10, requireContext())
+                image_caption_input.text = Editable.Factory.getInstance().newEditable(state.currentDay.imageCaption)
+                today_mood_input.setText(state.currentDay.moodText)
+                mood_header2.text = state.currentDay.moodText.take(10) + "..." // hardcoded
+                activity_amount.text = totalActivityText(10, requireContext()) //todo: check this
                 activity_header2.text = totalActivityText(10, requireContext())
-                activity_graph.setData(activity.activities)
+                activity_graph.setData(state.currentDay.activities)
 
-                Log.i(TAG, "loading image: ${activity.imagePath}")
-
-                if (activity.imagePath != "")
-                    Picasso.get().load(activity.imagePath).noPlaceholder().centerCrop().fit().into(today_btn_image)
-            }
-        })
-
-        viewModel.selectedEmoji.observe(this, Observer {
-            it?.let { emoji ->
-                emoji_info_header.text = getEmojiText(emoji, requireContext())
-                emoji_header2.text = getEmojiText(emoji, requireContext())
-            }
-        })
-
-        viewModel.liveState.observe(this, Observer {
-            when (it?.status) {
-                Status.ERROR -> {
-                    Snackbar.make(this.view!!, "Error getting data!", Snackbar.LENGTH_SHORT).show()
-                }
-                Status.SUCCESSFUL -> {}
-                Status.LOADING -> {}
+                if (state.currentDay.imagePath != "")
+                    Picasso.get().load(state.currentDay.imagePath).noPlaceholder().centerCrop().fit().into(today_btn_image)
             }
         })
 
@@ -206,15 +177,15 @@ class DayFragment: Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.currentDay.value?.let {
-            saveDayActivity(it.imagePath) //todo too hacky
+        viewModel.liveState.value?.let {
+            saveDayActivity(it.currentDay.imagePath) //todo too hacky
         }
     }
 
-    fun saveDayActivity(uri: String) {
+    private fun saveDayActivity(uri: String) {
         val emoji = emojiAdapter.selected
         val date = TimeUtils.getTodayLong()
-        val physActivies = physActivityAdapter.activityList
+        val physActivies = viewModel.getState().currentDay.activities
         val moodText = today_mood_input.text.toString()
         val imagePath = uri
         val caption = image_caption_input.text.toString()

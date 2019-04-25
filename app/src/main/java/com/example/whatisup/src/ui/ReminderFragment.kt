@@ -37,9 +37,9 @@ class ReminderFragment: Fragment() {
         val reminderAdapter = ReminderAdapter(requireContext(), listOf())
         reminder_recycler_view.adapter = reminderAdapter
 
-        reminderVm.reminders.observe(this, Observer {
+        reminderVm.state().observe(this, Observer {
             it?.let { data ->
-                reminderAdapter.update(data)
+                reminderAdapter.update(data.reminders)
             }
         })
 

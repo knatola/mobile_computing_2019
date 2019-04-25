@@ -71,8 +71,8 @@
         android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/reminder_action"
-        app:layout_constraintStart_toEndOf="@id/today_action"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 

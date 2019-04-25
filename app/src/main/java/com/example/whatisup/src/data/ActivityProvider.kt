@@ -22,15 +22,24 @@ object ActivityProvider {
     fun requestUpdates(context: Context) {
         Log.d(TAG, "Started Activity Tracking!")
         val intent = Intent(context, ActivityTrackingService::class.java)
-        val pendingIntent = PendingIntent.getService(context, REQUEST_CODE, intent,PendingIntent.FLAG_UPDATE_CURRENT)
-        val task = ActivityRecognition.getClient(context).requestActivityUpdates(10000, pendingIntent)
+        val pendingIntent = PendingIntent.getService(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val task = ActivityRecognition.getClient(context).requestActivityTransitionUpdates(createRequests(), pendingIntent)
+        val task2 = ActivityRecognition.getClient(context).requestActivityUpdates(10000L, pendingIntent)
 
         task.addOnSuccessListener {
-            Log.d(TAG, "Successfully found new activity")
+            Log.d(TAG, "Request for updates success")
         }
 
         task.addOnFailureListener {
-            Log.w(TAG, "Error in handling new activity")
+            Log.w(TAG, "Error requesting activity updates", it)
+        }
+
+        task2.addOnSuccessListener {
+            Log.d(TAG, "Request 2 for updates success")
+        }
+
+        task2.addOnFailureListener {
+            Log.w(TAG, "Error in request 2", it)
         }
     }
 
@@ -47,12 +56,38 @@ object ActivityProvider {
             ActivityTransition.Builder()
                 .setActivityType(DetectedActivity.WALKING)
                 .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
                 .build()
         )
         transitions.add(
             ActivityTransition.Builder()
-                .setActivityType(DetectedActivity.WALKING)
+                .setActivityType(DetectedActivity.STILL)
                 .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                .build()
+        )
+
+        transitions.add(
+            ActivityTransition.Builder()
+                .setActivityType(DetectedActivity.ON_BICYCLE)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                .build()
+        )
+
+        transitions.add(
+            ActivityTransition.Builder()
+                .setActivityType(DetectedActivity.ON_FOOT)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                .build()
+        )
+
+        transitions.add(
+            ActivityTransition.Builder()
+                .setActivityType(DetectedActivity.RUNNING)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
                 .build()
         )
 

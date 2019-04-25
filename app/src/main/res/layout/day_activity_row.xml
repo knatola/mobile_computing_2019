@@ -15,27 +15,27 @@
         android:id="@+id/day_activity_image"
         android:layout_alignParentStart="true"
         android:src="@drawable/ic_calendar"
-        android:layout_margin="@dimen/medium_margin"
+        android:layout_margin="@dimen/large_margin"
         android:layout_width="54dp"
         android:layout_height="54dp" />
 
     <TextView
         android:id="@+id/day_activity_date"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/black"
         android:layout_toEndOf="@+id/day_activity_image"
         android:textSize="@dimen/medium_text"
-        android:layout_marginStart="@dimen/small_margin"
-        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginStart="@dimen/large_margin"
+        android:layout_marginEnd="@dimen/large_margin"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/day_activity_emoji"
-        android:layout_margin="@dimen/medium_margin"
+        android:layout_margin="@dimen/large_margin"
         android:layout_centerVertical="true"
         android:src="@drawable/happy"
-        android:layout_toStartOf="@+id/day_row_expanded"
+        android:layout_toEndOf="@id/day_activity_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

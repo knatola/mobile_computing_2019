@@ -2,23 +2,22 @@ package com.example.whatisup.src.ui.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.example.whatisup.src.data.common.State
-import com.example.whatisup.src.data.common.Status
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class BaseViewModel : ViewModel() {
+abstract class BaseViewModel<T> : ViewModel() {
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    val liveState = MutableLiveData<State>()
 
-    init {
-        liveState.value = State(Status.SUCCESSFUL) // todo: base state could rather be IDLE or something
-    }
+    open val liveState = MutableLiveData<T>()
 
-    fun setState(state: State) {
+    fun setState(state: T) {
         this.liveState.value = state
     }
+
+    fun getState() = this.liveState.value!! // !! here is problematic
+
+    fun state() = this.liveState
 
     protected fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)

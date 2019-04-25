@@ -1,6 +1,5 @@
 package com.example.whatisup.src.ui.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
@@ -9,18 +8,18 @@ import com.example.whatisup.src.data.repository.ReminderRepository
 
 private const val TAG = "ReminderViewModel"
 
-class ReminderViewModel(private val reminderRepository: ReminderRepository) : BaseViewModel() {
+data class ReminderViewState(val reminders: List<Reminder> = listOf())
 
-    var reminders = MutableLiveData<List<Reminder>>()
+class ReminderViewModel(private val reminderRepository: ReminderRepository) : BaseViewModel<ReminderViewState>() {
 
     init {
-        reminders.value = listOf()
+        setState(ReminderViewState())
     }
 
     fun getAllReminders() {
         addDisposable(reminderRepository.getReminders()
             .subscribe({ data ->
-                reminders.value = data
+                setState(ReminderViewState(data))
             }, { e ->
                 Log.w(TAG, "Error getting reminders", e)
             })

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="@dimen/bottom_selector_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/week_header_row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -15,7 +17,7 @@
             android:layout_toStartOf="@id/week_header"
             android:layout_marginEnd="@dimen/medium_margin"
             android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/small_margin"
             android:layout_marginTop="4dp"
             android:textColor="@color/colorPrimary"
             android:text="@string/week_prev"
@@ -28,7 +30,6 @@
             android:textColor="@color/colorPrimary"
             android:layout_toEndOf="@id/week_header"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="@dimen/large_margin"
             android:layout_marginEnd="@dimen/medium_margin"
             android:layout_marginStart="@dimen/medium_margin"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
@@ -40,37 +41,50 @@
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginBottom="@dimen/small_margin"
             android:id="@+id/week_header"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             android:textSize="@dimen/medium_text"
             android:textAlignment="center"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <ProgressBar
-            android:id="@+id/graph_progress"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="160dp"
-            android:visibility="invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.example.whatisup.src.ui.view.GraphView
-            android:id="@+id/graph_view"
-            android:layout_below="@+id/week_header"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/medium_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/day_activities"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginTop="@dimen/large_margin"
-            android:layout_below="@id/graph_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
     </RelativeLayout>
 
-</ScrollView>
+    <ScrollView
+        android:layout_below="@+id/week_header_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/week_top_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/graph_progress"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="160dp"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.example.whatisup.src.ui.view.GraphView
+                android:id="@+id/graph_view"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/medium_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/day_activities"
+                android:nestedScrollingEnabled="false"
+                android:layout_below="@+id/graph_view"
+                android:layout_marginTop="@dimen/large_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

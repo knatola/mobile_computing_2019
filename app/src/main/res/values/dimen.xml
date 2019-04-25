@@ -13,4 +13,7 @@
 
  <dimen name="bottom_selector_margin">60dp</dimen>
 
+ <dimen name="elevation_card_small">1dp</dimen>
+ <dimen name="elevation_card_large">8dp</dimen>
+
 </resources>

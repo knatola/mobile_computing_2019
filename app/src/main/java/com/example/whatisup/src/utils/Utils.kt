@@ -44,8 +44,19 @@ fun getActivityText(type: Int, context: Context): String {
         TYPE_OTHER-> context.getString(R.string.other)
         DetectedActivity.ON_BICYCLE -> context.getString(R.string.on_bicycle)
         DetectedActivity.WALKING -> context.getString(R.string.walking)
-        else -> context.getString(R.string.still)
+        else -> context.getString(R.string.other)
     }
+}
+
+fun checkType(type: Int): Boolean {
+    if (type == DetectedActivity.ON_FOOT) return true
+    if (type == DetectedActivity.RUNNING) return true
+    if (type == DetectedActivity.STILL) return true
+    if (type == DetectedActivity.ON_BICYCLE) return true
+    if (type == DetectedActivity.WALKING) return true
+    if (type == TYPE_OTHER) return true
+
+    return false
 }
 
 fun getEmojiList() = emojiList

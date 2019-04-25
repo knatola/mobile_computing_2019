@@ -13,6 +13,14 @@ object TimeUtils {
         return format.format(c)
     }
 
+    fun getReadableDate(date: Long): String {
+        val d = Date(date)
+        val df2 = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+        val string = df2.format(d)
+
+        return string
+    }
+
     fun getTodayLong() : Long {
         return getToday().toLong()
     }
@@ -76,13 +84,13 @@ object TimeUtils {
     }
 
     /**
-     * Formats yyMMdd Strings to MM-dd
+     * Formats yyMMdd Strings to dd.MM
      *
      * @param date the date as string
      * @return String the formatted string
      */
     fun formatDate(date: String): String {
         val chunks = date.chunked(2)
-        return "${chunks[1]}-${chunks[2]}"
+        return "${chunks[2]}.${chunks[1]}"
     }
 }

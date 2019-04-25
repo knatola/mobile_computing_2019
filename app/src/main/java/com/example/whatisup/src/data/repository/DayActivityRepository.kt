@@ -1,5 +1,6 @@
 package com.example.whatisup.src.data.repository
 
+import android.util.Log
 import com.example.whatisup.src.data.AppDatabase
 import com.example.whatisup.src.data.model.DayActivity
 import io.reactivex.Completable
@@ -7,6 +8,8 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+
+private const val TAG = "DayActivityRepository"
 
 class DayActivityRepository(private val db: AppDatabase) {
 
@@ -24,6 +27,12 @@ class DayActivityRepository(private val db: AppDatabase) {
 
     fun getDayActivity(date: Long): Maybe<DayActivity> {
         return db.getDayActivityDao().getDayActivity(date)
+            .doOnEvent { t1, t2 ->
+                if (t1 == null && t2 == null) {
+                    Log.w(TAG, "Found null date in db, creating empty activity!")
+                    insertDayActivity(DayActivity()).subscribe()
+                }
+            }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
     }

@@ -68,7 +68,9 @@ class DayActivityViewHolder(view: View): RecyclerView.ViewHolder(view) {
         this.caption.text = if (activity.imageCaption != "") activity.imageCaption else "No caption"
         this.emoji.setImageDrawable(getEmojiDrawable(activity.emoji, context))
 
-        Picasso.get().load(activity.imagePath).transform(CircleTransform()).into(this.image)
+        if (activity.imagePath != "") {
+            Picasso.get().load(activity.imagePath).transform(CircleTransform()).into(this.image)
+        }
 
         when (activity.expanded) {
             true -> {
