@@ -74,5 +74,7 @@
     <string name="reminder_goal_walking_notification">You have achieved your goal on walking for the day!</string>
     <string name="reminder_goal_walking_text">Achieved goal for walking.</string>
     <string name="reminder_goal_walking_header">Goal achieved</string>
+    <string name="reminder_notification_description">Channel for showing reminders about your daily activity.</string>
+    <string name="reminder_notification_channel_name">Reminders</string>
 
 </resources>

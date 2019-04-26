@@ -7,7 +7,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,19 +15,19 @@
         android:focusableInTouchMode="true">
 
         <LinearLayout
+            android:id="@+id/image_wrapper"
             android:orientation="vertical"
             android:animateLayoutChanges="true"
             android:layout_marginTop="@dimen/large_margin"
             android:layout_marginBottom="@dimen/large_margin"
             android:outlineProvider="bounds"
             android:elevation="2dp"
-            android:id="@+id/image_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:orientation="horizontal"
                 android:id="@+id/image_edit_view"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/large_margin"
                 android:layout_marginBottom="@dimen/medium_margin"
                 android:paddingBottom="@dimen/medium_margin"

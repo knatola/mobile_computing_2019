@@ -12,12 +12,13 @@ import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.widget.TextView
 import com.example.whatisup.R
+import com.example.whatisup.src.BaseApp
 import com.example.whatisup.src.data.ActivityProvider
-import com.example.whatisup.src.data.model.Reminder
 import com.example.whatisup.src.utils.TimeUtils
 import com.example.whatisup.src.utils.stringDate
-import kotlinx.android.synthetic.main.activity_main.*
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.custom_bottom_navigation.*
+import java.util.concurrent.TimeUnit
 
 private const val TAG = "MainActivity"
 
@@ -66,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         reminder_action.setOnClickListener {
             loadFragment(reminderFragment, getString(R.string.reminders))
         }
+
+        // just for test purposes show hardcoded notification
+        Observable.timer(10, TimeUnit.SECONDS)
+            .subscribe { BaseApp.notificationProvider.getNotification(this, "still") }
     }
 
     private fun loadFragment(fragment: Fragment, title: String) {

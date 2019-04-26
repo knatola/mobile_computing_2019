@@ -31,7 +31,7 @@ class WeekFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModelFactory = Injection.provideDayActivityVmFactory(requireContext())
+        viewModelFactory = Injection.provideDayActivityVmFactory()
         viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(DayActivityViewModel::class.java)
     }
 

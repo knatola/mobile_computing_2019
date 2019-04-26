@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.whatisup.R
+import com.example.whatisup.src.BaseApp
 import com.example.whatisup.src.data.model.DayActivity
 import com.example.whatisup.src.ui.adapter.EmojiAdapter
 import com.example.whatisup.src.ui.viewmodel.DayActivityViewModel
@@ -50,7 +51,7 @@ class DayFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModelFactory = Injection.provideDayActivityVmFactory(requireContext())
+        viewModelFactory = Injection.provideDayActivityVmFactory()
         viewModel = activity?.run {
             ViewModelProviders.of(this, viewModelFactory).get(DayActivityViewModel::class.java)
         } ?: throw IllegalStateException("Invalid Activity!")

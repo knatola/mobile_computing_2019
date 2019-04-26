@@ -29,7 +29,8 @@ const val ACTIVITY_CHANNEL = "activity"
 
 class ActivityTrackingService() : IntentService(TAG) {
 
-    private val activityRepo = Injection.provideDayActivityRepo(this)
+    private val activityRepo = Injection.provideDayActivityRepo()
+
     var startTime: Long = System.currentTimeMillis()
     var currentType: Int = 0
 

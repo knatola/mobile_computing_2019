@@ -3,9 +3,9 @@ package com.example.whatisup.src.ui.viewmodel
 import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.example.whatisup.src.data.repository.DayActivityRepository
 import com.example.whatisup.src.data.RxBus
 import com.example.whatisup.src.data.model.DayActivity
+import com.example.whatisup.src.data.repository.DayActivityRepository
 import com.example.whatisup.src.utils.TimeUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -32,7 +32,7 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
                 Log.d(TAG, "New value from ActivityService!")
-                setState(this.getState().copy(currentDay = it))
+                setState(this.getState().copy(currentDay = it, selectedEmoji = it.emoji))
             }, { e ->
                 Log.w(TAG, "error!", e)
             })
@@ -50,8 +50,6 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
 
     fun setActivity(date: Long) {
         val disposable = dayActivityRepository.getDayActivity(date)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.d(TAG, "Current day = ${it.date}, ${it.imagePath}")
                 val state = this.getState().copy(currentDay = it, selectedEmoji = it.emoji)
@@ -64,9 +62,8 @@ class DayActivityViewModel(private val dayActivityRepository: DayActivityReposit
 
     @SuppressLint("CheckResult")
     fun saveActivity(act: DayActivity) {
-        dayActivityRepository.insertDayActivity(act).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete { setState(getState().copy(currentDay = act)) }
+        dayActivityRepository.insertDayActivity(act)
+            .doOnComplete { setState(getState().copy(currentDay = act, selectedEmoji = act.emoji)) }
             .subscribe({ Log.i(TAG, "Saved DayActivity successfully")}, { e -> Log.w(TAG, "failed to save DayActivity", e)})
     }
 

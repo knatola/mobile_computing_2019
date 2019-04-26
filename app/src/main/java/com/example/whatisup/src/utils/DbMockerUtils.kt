@@ -55,6 +55,7 @@ fun createMocks(): List<DayActivity> {
         returnList.add(mockActivity)
         farEnd++
     }
+    returnList.add(DayActivity(date = 9999L))
 
     return returnList.toList()
 }
