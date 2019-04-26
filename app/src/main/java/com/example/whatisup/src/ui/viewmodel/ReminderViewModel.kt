@@ -26,6 +26,12 @@ class ReminderViewModel(private val reminderRepository: ReminderRepository) : Ba
         )
     }
 
+    fun deleteReminder(reminder: Reminder) {
+        reminderRepository.deleteReminder(reminder)
+            .doOnComplete { getAllReminders() }
+            .subscribe()
+    }
+
     class Factory(private val reminderRepository: ReminderRepository) : ViewModelProvider.Factory {
 
         @Suppress("unchecked_cast")

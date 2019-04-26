@@ -65,7 +65,7 @@ class NotificationProvider(context: Context) {
     private fun getContentTitle(type: String, context: Context): String {
         return when (type) {
             "still" -> {
-                context.getString(R.string.reminder_still_notification)
+                context.getString(R.string.reminder_still_header)
             }
             else -> { "" }
         }

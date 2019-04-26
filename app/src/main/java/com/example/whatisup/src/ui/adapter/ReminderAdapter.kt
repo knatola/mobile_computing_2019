@@ -2,7 +2,6 @@ package com.example.whatisup.src.ui.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,12 @@ import com.example.whatisup.src.data.model.Reminder
 import com.example.whatisup.src.data.model.getReminderDrawable
 import com.example.whatisup.src.data.model.getReminderHeader
 import com.example.whatisup.src.data.model.getReminderText
+import com.example.whatisup.src.ui.viewmodel.ReminderViewModel
 import com.example.whatisup.src.utils.stringDate
 
-class ReminderAdapter(private val context: Context, private var data: List<Reminder>)
+class ReminderAdapter(private val context: Context,
+                      private var data: List<Reminder>,
+                      private val vm: ReminderViewModel)
     : RecyclerView.Adapter<ReminderViewHolder>() {
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
@@ -54,6 +56,10 @@ class ReminderAdapter(private val context: Context, private var data: List<Remin
         }
 
         holder.bind(reminder, context)
+
+        holder.btn.setOnClickListener {
+            vm.deleteReminder(reminder)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -68,6 +74,7 @@ class ReminderAdapter(private val context: Context, private var data: List<Remin
 
     fun update(data: List<Reminder>) {
         this.data = data
+        notifyDataSetChanged()
     }
 }
 
@@ -83,7 +90,6 @@ class ReminderViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         this.header.text = getReminderHeader(reminder.type, context)
         this.text.text = getReminderText(reminder.type, context)
         this.icon.setImageDrawable(getReminderDrawable(reminder.type, context))
-        Log.d("adapter", "date: ${stringDate(reminder.date)}")
         this.date.text = stringDate(reminder.date)
     }
 }

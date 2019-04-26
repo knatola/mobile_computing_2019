@@ -34,7 +34,7 @@ class ReminderFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         reminder_recycler_view.layoutManager = GridLayoutManager(requireContext(), 2)
-        val reminderAdapter = ReminderAdapter(requireContext(), listOf())
+        val reminderAdapter = ReminderAdapter(requireContext(), listOf(), reminderVm)
         reminder_recycler_view.adapter = reminderAdapter
 
         reminderVm.state().observe(this, Observer {
