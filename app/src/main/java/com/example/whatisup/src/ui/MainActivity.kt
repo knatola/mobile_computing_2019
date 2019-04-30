@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.widget.TextView
+import com.example.whatisup.BuildConfig
 import com.example.whatisup.R
 import com.example.whatisup.src.BaseApp
 import com.example.whatisup.src.data.ActivityProvider
@@ -68,9 +69,11 @@ class MainActivity : AppCompatActivity() {
             loadFragment(reminderFragment, getString(R.string.reminders))
         }
 
-        // just for test purposes show hardcoded notification
-        Observable.timer(10, TimeUnit.SECONDS)
-            .subscribe { BaseApp.notificationProvider.getNotification(this, "still") }
+        if(BuildConfig.DEBUG) {
+            // just for test/demo purposes show hardcoded notification
+            Observable.interval(20, TimeUnit.SECONDS)
+                .subscribe { BaseApp.notificationProvider.getNotification(this, "still") }
+        }
     }
 
     private fun loadFragment(fragment: Fragment, title: String) {
