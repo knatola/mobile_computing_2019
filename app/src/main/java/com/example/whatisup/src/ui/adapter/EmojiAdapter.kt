@@ -1,7 +1,7 @@
 package com.example.whatisup.src.ui.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.example.whatisup.src.data.model.Emoji
 import com.example.whatisup.src.ui.viewmodel.DayActivityViewModel
 import com.example.whatisup.src.utils.getEmojiDrawable
 
-class EmojiAdapter(private val emojiList: List<Emoji>, private val context: Context) : RecyclerView.Adapter<EmojiViewHolder>() {
+class EmojiAdapter(private val emojiList: List<Emoji>, private val context: Context) : androidx.recyclerview.widget.RecyclerView.Adapter<EmojiViewHolder>() {
 
     private val holderList: MutableList<EmojiViewHolder> = mutableListOf()
     var selected: Int = 2 // default selected is neutral
@@ -61,7 +61,7 @@ class EmojiAdapter(private val emojiList: List<Emoji>, private val context: Cont
     }
 }
 
-class EmojiViewHolder(v: View) : RecyclerView.ViewHolder(v){
+class EmojiViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v){
     val emojiIcon = v.findViewById<ImageButton>(R.id.emoticon_btn)
     val selectedIndicator = v.findViewById<View>(R.id.selected_indicator)
 }

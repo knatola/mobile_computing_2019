@@ -1,6 +1,6 @@
 package com.example.whatisup.viewmodel
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import android.util.Log
 import android.util.TimeUtils
 import com.example.whatisup.BuildConfig

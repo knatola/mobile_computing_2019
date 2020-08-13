@@ -1,13 +1,13 @@
 package com.example.whatisup.src.ui
 
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.widget.TextView
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dayFragment: DayFragment
     private lateinit var weekFragment: WeekFragment
     private lateinit var reminderFragment: ReminderFragment
-    private lateinit var activeFragment: Fragment
+    private lateinit var activeFragment: androidx.fragment.app.Fragment
     private lateinit var bottomNav: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadFragment(fragment: Fragment, title: String) {
+    private fun loadFragment(fragment: androidx.fragment.app.Fragment, title: String) {
 
         if (supportFragmentManager.findFragmentByTag(SECOND_DAY_FRAG_TAG) != null) {
             val secondDayFragment = supportFragmentManager.findFragmentByTag(SECOND_DAY_FRAG_TAG)
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         animateNavigation(fragment)
     }
 
-    private fun initFragment(fragment: Fragment, i: String) {
+    private fun initFragment(fragment: androidx.fragment.app.Fragment, i: String) {
         supportFragmentManager.beginTransaction().add(R.id.main_framelayout, fragment, i).hide(fragment).commit()
     }
 
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         toolbar.title = title
     }
 
-    private fun animateNavigation(fragment: Fragment) {
+    private fun animateNavigation(fragment: androidx.fragment.app.Fragment) {
         val transition = AutoTransition()
         transition.duration = 200
         TransitionManager.beginDelayedTransition(bottomNav, transition)

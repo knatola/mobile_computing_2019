@@ -1,7 +1,7 @@
 package com.example.whatisup.src.ui.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +20,7 @@ import com.example.whatisup.src.utils.stringDate
 class ReminderAdapter(private val context: Context,
                       private var data: List<Reminder>,
                       private val vm: ReminderViewModel)
-    : RecyclerView.Adapter<ReminderViewHolder>() {
+    : androidx.recyclerview.widget.RecyclerView.Adapter<ReminderViewHolder>() {
 
     override fun onBindViewHolder(holder: ReminderViewHolder, position: Int) {
         val reminder = data[position]
@@ -78,7 +78,7 @@ class ReminderAdapter(private val context: Context,
     }
 }
 
-class ReminderViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+class ReminderViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v) {
     val baseView = v
     val header = v.findViewById<TextView>(R.id.reminder_header)
     val icon = v.findViewById<ImageView>(R.id.reminder_icon)

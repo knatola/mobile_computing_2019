@@ -6,7 +6,9 @@ import com.example.whatisup.src.data.AppDatabase
 import com.example.whatisup.src.data.repository.DayActivityRepository
 import com.example.whatisup.src.data.repository.DayActivityRepositoryImpl
 import com.example.whatisup.src.utils.NotificationProvider
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class BaseApp : Application() {
 
     companion object MODULE {

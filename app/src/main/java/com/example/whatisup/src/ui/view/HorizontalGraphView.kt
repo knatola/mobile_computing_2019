@@ -11,7 +11,7 @@ import com.example.whatisup.src.utils.getActivityText
 import com.google.android.gms.location.DetectedActivity
 import java.util.concurrent.TimeUnit
 import android.graphics.*
-import android.support.v4.view.MotionEventCompat
+import androidx.core.view.MotionEventCompat
 import android.view.MotionEvent
 import android.view.MotionEvent.INVALID_POINTER_ID
 import com.example.whatisup.src.utils.checkType

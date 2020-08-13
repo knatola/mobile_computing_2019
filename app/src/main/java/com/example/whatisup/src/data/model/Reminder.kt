@@ -1,7 +1,7 @@
 package com.example.whatisup.src.data.model
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import android.content.Context
 import android.graphics.drawable.Drawable
 import com.example.whatisup.R

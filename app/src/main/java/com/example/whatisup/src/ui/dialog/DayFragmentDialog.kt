@@ -1,13 +1,13 @@
 package com.example.whatisup.src.ui.dialog
 
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.whatisup.R
 
-class DayFragmentDialog(): DialogFragment() {
+class DayFragmentDialog(): androidx.fragment.app.DialogFragment() {
 
     companion object {
 
@@ -23,6 +23,6 @@ class DayFragmentDialog(): DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo_Light_Dialog)
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Holo_Light_Dialog)
     }
 }

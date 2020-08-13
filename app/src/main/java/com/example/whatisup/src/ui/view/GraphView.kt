@@ -10,7 +10,7 @@ import com.example.whatisup.R
 import com.example.whatisup.src.data.model.DayActivity
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.res.ResourcesCompat
 import com.example.whatisup.src.utils.TimeUtils
 
 private const val TAG = "GraphView"

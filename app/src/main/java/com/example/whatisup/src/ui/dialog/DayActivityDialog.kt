@@ -3,7 +3,7 @@ package com.example.whatisup.src.ui.dialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.whatisup.R
 import com.example.whatisup.src.ui.DayFragment
 

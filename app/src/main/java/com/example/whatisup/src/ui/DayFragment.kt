@@ -1,13 +1,13 @@
 package com.example.whatisup.src.ui
 
 import android.app.Activity.RESULT_OK
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
@@ -34,7 +34,7 @@ import kotlin.math.exp
 private const val TAG = "DayFragment"
 private const val REQUEST_IMAGE_PICK = 11
 
-class DayFragment: Fragment() {
+class DayFragment: androidx.fragment.app.Fragment() {
 
     private lateinit var viewModel: DayActivityViewModel
     private lateinit var viewModelFactory: DayActivityViewModelFactory
@@ -67,7 +67,12 @@ class DayFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        emoji_recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        emoji_recycler.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(
+                requireContext(),
+                androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL,
+                false
+            )
         emojiAdapter = EmojiAdapter(getEmojiList(), requireContext())
         emojiAdapter.setVm(viewModel)
         emoji_recycler.adapter = emojiAdapter

@@ -1,6 +1,6 @@
 package com.example.whatisup.src.data.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.example.whatisup.src.data.model.DayActivity
 import io.reactivex.Maybe
 

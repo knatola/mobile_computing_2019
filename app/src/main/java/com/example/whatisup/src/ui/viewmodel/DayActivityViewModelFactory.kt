@@ -1,7 +1,7 @@
 package com.example.whatisup.src.ui.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.whatisup.src.data.repository.DayActivityRepository
 
 class DayActivityViewModelFactory(private val dayActivityRepository: DayActivityRepository)

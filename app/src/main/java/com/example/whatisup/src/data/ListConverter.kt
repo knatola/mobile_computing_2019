@@ -1,6 +1,6 @@
 package com.example.whatisup.src.data
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.example.whatisup.src.data.model.PhysicalActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

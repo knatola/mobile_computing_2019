@@ -1,12 +1,12 @@
 package com.example.whatisup.src.ui
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.week_fragment_layout.*
 
 private const val TAG = "WeekFragment"
 
-class WeekFragment: Fragment() {
+class WeekFragment: androidx.fragment.app.Fragment() {
 
     private lateinit var viewModel: DayActivityViewModel
     private lateinit var viewModelFactory: DayActivityViewModelFactory
@@ -42,7 +42,12 @@ class WeekFragment: Fragment() {
     @SuppressLint
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        day_activities.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        day_activities.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(
+                requireContext(),
+                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+                false
+            )
 
         dayAdapter = DayActivityAdapter(listOf(), requireActivity() as AppCompatActivity)
         day_activities.adapter = dayAdapter

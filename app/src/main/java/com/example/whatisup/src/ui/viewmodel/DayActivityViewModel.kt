@@ -1,7 +1,7 @@
 package com.example.whatisup.src.ui.viewmodel
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.whatisup.src.data.RxBus
 import com.example.whatisup.src.data.model.DayActivity

@@ -1,8 +1,8 @@
 package com.example.whatisup.src.ui.adapter
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso
 private const val TAG = "DayActivityAdapter"
 
 class DayActivityAdapter(var list: List<DayActivity>,
-                         val context: AppCompatActivity): RecyclerView.Adapter<DayActivityViewHolder>() {
+                         val context: AppCompatActivity): androidx.recyclerview.widget.RecyclerView.Adapter<DayActivityViewHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -53,7 +53,7 @@ class DayActivityAdapter(var list: List<DayActivity>,
     }
 }
 
-class DayActivityViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class DayActivityViewHolder(view: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
     val rowLinear = view.findViewById<RelativeLayout>(R.id.day_activity_linear)
     val dateText = view.findViewById<TextView>(R.id.day_activity_date)
     val image = view.findViewById<ImageView>(R.id.day_activity_image)
