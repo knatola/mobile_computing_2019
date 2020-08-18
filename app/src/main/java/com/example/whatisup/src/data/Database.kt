@@ -16,6 +16,8 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
+const val DB_NAME = "local_db"
+
 @Database(entities = [DayActivity::class, Reminder::class], version = 1)
 @TypeConverters(ListConverter::class)
 abstract class AppDatabase: RoomDatabase() {
@@ -24,37 +26,4 @@ abstract class AppDatabase: RoomDatabase() {
 
     abstract fun getReminderDao(): ReminderDao
 
-    companion object {
-        var INSTANCE: AppDatabase? = null
-
-        fun getAppDataBase(context: Context): AppDatabase? {
-            if (INSTANCE == null){
-                synchronized(AppDatabase::class){
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        AppDatabase::class.java, "testdb").build()
-                }
-            }
-
-
-            if (BuildConfig.DEBUG) {
-                val mockList = createMocks()
-                mockList.forEach {
-                    Completable.fromAction { INSTANCE!!.getDayActivityDao().insert(it) }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe {  }
-                }
-
-                val mockReminders = createMockReminders()
-                mockReminders.forEach {
-                    Completable.fromAction { INSTANCE!!.getReminderDao().insert(it) }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe {  }
-                }
-            }
-
-            return INSTANCE
-        }
-    }
 }

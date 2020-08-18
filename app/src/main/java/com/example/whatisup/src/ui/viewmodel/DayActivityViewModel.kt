@@ -3,6 +3,7 @@ package com.example.whatisup.src.ui.viewmodel
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import com.example.whatisup.src.data.RxBus
 import com.example.whatisup.src.data.model.DayActivity
 import com.example.whatisup.src.data.repository.DayActivityRepository
@@ -16,7 +17,8 @@ data class DayViewState(val activities: List<DayActivity> = listOf(),
                         val currentDay: DayActivity = DayActivity(),
                         val selectedEmoji: Int = 2)
 
-class DayActivityViewModel(private val dayActivityRepository: DayActivityRepository) : BaseViewModel<DayViewState>() {
+class DayActivityViewModel @ViewModelInject constructor(private val dayActivityRepository: DayActivityRepository)
+    : BaseViewModel<DayViewState>() {
 
     private var current = 1
     var count = 0

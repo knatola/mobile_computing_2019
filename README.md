@@ -29,6 +29,7 @@ With tech stack:
 * [Room](https://developer.android.com/topic/libraries/architecture/room)
 * [livedata](https://developer.android.com/topic/libraries/architecture/livedata)
 * [picasso](https://square.github.io/picasso/)
+* [dagger/hilt](https://dagger.dev/hilt/)
 
 ## Building project
 

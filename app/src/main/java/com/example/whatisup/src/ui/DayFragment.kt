@@ -2,12 +2,10 @@ package com.example.whatisup.src.ui
 
 import android.app.Activity.RESULT_OK
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,33 +13,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import com.example.whatisup.R
-import com.example.whatisup.src.BaseApp
 import com.example.whatisup.src.data.model.DayActivity
 import com.example.whatisup.src.ui.adapter.EmojiAdapter
 import com.example.whatisup.src.ui.viewmodel.DayActivityViewModel
-import com.example.whatisup.src.ui.viewmodel.DayActivityViewModelFactory
 import com.example.whatisup.src.utils.*
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.day_view_fragment_layout.*
 import kotlinx.android.synthetic.main.emoji_info_layout.*
 import kotlinx.android.synthetic.main.graph_info_layout.*
 import kotlinx.android.synthetic.main.image_info_layout.*
 import kotlinx.android.synthetic.main.mood_info_layout.*
-import java.lang.IllegalStateException
-import kotlin.math.exp
 
 private const val TAG = "DayFragment"
 private const val REQUEST_IMAGE_PICK = 11
 
-class DayFragment: androidx.fragment.app.Fragment() {
+@AndroidEntryPoint
+class DayFragment: Fragment() {
 
-    private lateinit var viewModel: DayActivityViewModel
-    private lateinit var viewModelFactory: DayActivityViewModelFactory
+    private val viewModel: DayActivityViewModel by viewModels()
     private lateinit var emojiAdapter: EmojiAdapter
 
     private var date: Long = 0
 
+    // todo: move to viewmodel state
     // booleans to track the different expanded states, simple
     private var imageExpanded = true
     private var emojiExpanded = true
@@ -51,13 +48,8 @@ class DayFragment: androidx.fragment.app.Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModelFactory = Injection.provideDayActivityVmFactory()
-        viewModel = activity?.run {
-            ViewModelProviders.of(this, viewModelFactory).get(DayActivityViewModel::class.java)
-        } ?: throw IllegalStateException("Invalid Activity!")
-
         arguments?.let {
-            date = arguments!!.getLong("date")
+            date = requireArguments().getLong("date")
             viewModel.setActivity(date)
         }
     }
@@ -79,7 +71,7 @@ class DayFragment: androidx.fragment.app.Fragment() {
 
         activity_graph.setDefaultTargetPoints() // default targets
 
-        viewModel.state().observe(this, Observer {
+        viewModel.state().observe(viewLifecycleOwner, Observer {
             it?.let { state ->
                 emoji_info_header.text = getEmojiText(state.selectedEmoji, requireContext())
                 emoji_header2.text = getEmojiText(state.selectedEmoji, requireContext())

@@ -12,12 +12,9 @@ import dagger.hilt.android.HiltAndroidApp
 class BaseApp : Application() {
 
     companion object MODULE {
-
-        lateinit var dayActivityRepository: DayActivityRepository
         lateinit var notificationProvider: NotificationProvider
 
         fun initRepos(context: Context) {
-            dayActivityRepository = DayActivityRepositoryImpl(AppDatabase.getAppDataBase(context)!!)
             notificationProvider = NotificationProvider(context)
         }
     }

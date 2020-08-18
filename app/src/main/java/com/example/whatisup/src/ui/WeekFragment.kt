@@ -2,38 +2,28 @@ package com.example.whatisup.src.ui
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.whatisup.R
 import com.example.whatisup.src.ui.adapter.DayActivityAdapter
 import com.example.whatisup.src.ui.viewmodel.DayActivityViewModel
-import com.example.whatisup.src.ui.viewmodel.DayActivityViewModelFactory
-import com.example.whatisup.src.utils.Injection
 import com.example.whatisup.src.utils.stringDate
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.week_fragment_layout.*
 
 private const val TAG = "WeekFragment"
 
+@AndroidEntryPoint
 class WeekFragment: androidx.fragment.app.Fragment() {
 
-    private lateinit var viewModel: DayActivityViewModel
-    private lateinit var viewModelFactory: DayActivityViewModelFactory
+    private val viewModel: DayActivityViewModel by viewModels()
     private lateinit var dayAdapter: DayActivityAdapter
     private val disposables: CompositeDisposable = CompositeDisposable()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModelFactory = Injection.provideDayActivityVmFactory()
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(DayActivityViewModel::class.java)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.week_fragment_layout, container, false)
@@ -60,7 +50,7 @@ class WeekFragment: androidx.fragment.app.Fragment() {
             viewModel.setActivities(false)
         }
 
-        viewModel.state().observe(this, Observer {
+        viewModel.state().observe(viewLifecycleOwner, Observer {
             it?.let { state ->
                 dayAdapter.update(state.activities)
                 graph_view.setDataSet(state.activities)
